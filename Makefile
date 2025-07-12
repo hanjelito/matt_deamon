@@ -1,8 +1,8 @@
 CXX = clang++
 CXXFLAGS = -std=c++11 -Wall -Wextra -pedantic
 
-SRC = deamon.cpp
-TARGET = deamon
+SRC = daemon.cpp
+TARGET = daemon
 
 all: $(TARGET)
 

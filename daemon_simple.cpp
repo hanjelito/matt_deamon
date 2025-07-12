@@ -8,20 +8,20 @@
 #include <cstdlib>
 #include <cerrno> 
 
-class Deamon {
+class Daemon {
     public:
-        Deamon() = default;
-        Deamon(const Deamon& other) = default;
-        Deamon &operator=(const Deamon& other) = default;
-        ~Deamon() = default;
-
-        bool deamonize() {
+        Daemon() = default;
+        Daemon(const Daemon& other) = default;
+        Daemon &operator=(const Daemon& other) = default;
+        ~Daemon() = default;
+        
+        bool daemonize() {
             pid_t pid = fork();
             if ( pid < 0 ) return false;
             if ( pid > 0 ) _exit(EXIT_SUCCESS);
-
+            
             if ( setsid() < 0 ) return false;
-
+            
             pid = fork();
             if ( pid < 0 ) return false;
             if ( pid > 0 ) _exit(EXIT_SUCCESS);
@@ -31,11 +31,11 @@ class Deamon {
 
             close(STDIN_FILENO);
             close(STDOUT_FILENO);
-            close(STDERR_FILENO);
+            // close(STDERR_FILENO);
 
             open("/dev/null", O_RDONLY); // stdin
             open("/dev/null", O_RDWR); // stdout
-            open("/dev/null", O_RDWR); // stderr
+            // open("/dev/null", O_RDWR); // stderr
 
             return true;
         }
@@ -50,8 +50,8 @@ class Deamon {
 
 
 int main() {
-    Deamon d;
-    if (!d.deamonize()) {
+    Daemon d;
+    if (!d.daemonize()) {
         std::cerr << "Error al demonizar: " << std::strerror(errno) << "\n";
         return EXIT_FAILURE;
     }
