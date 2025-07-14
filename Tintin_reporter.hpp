@@ -1,9 +1,13 @@
-#ifndef TINTIN_REPORTER_H
-#define TINTIN_REPORTER_H
+#ifndef TINTIN_REPORTER_HPP
+#define TINTIN_REPORTER_HPP
 
-#include <string>
+#include <unistd.h>
+#include <cerrno>
+#include <fcntl.h>
+#include <iostream>
 #include <fstream>
-
+#include <cstring>
+#include <string>
 
 class Tintin_reporter {
     private:

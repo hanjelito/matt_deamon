@@ -10,9 +10,9 @@
 #include <fcntl.h>
 #include <string>
 
-#define LOCK_FILE "/var/lock/matt_daemon.lock"
-#define LOG_PATH "/var/log/matt_daemon/matt_daemon.log"
-#define LOG_DIR "/var/log/matt_daemon"
+#define LOCK_FILE "./matt_daemon.lock"
+#define LOG_PATH "./logs/matt_daemon.log"
+#define LOG_DIR "./logs"
 
 class MattDaemon {
     private:
@@ -20,9 +20,8 @@ class MattDaemon {
         Server _server;
         int _lockFd;
         bool _running;
-
-
-        // Metodos especificos de loggin del daemon
+        
+        // Métodos específicos de logging del daemon
         void logStart();
         void logCreateServer();
         void logServerCreated();
@@ -33,31 +32,33 @@ class MattDaemon {
         void logQuitting();
         void logSignalHandler();
         void logErrorFileLocked();
-
-
-        //Metodos principales del daemon
+        
+        // Métodos principales del daemon
         bool checkRoot();
         bool createLockFile();
-        void removeLogFile();
+        void removeLockFile();
         bool createLogDirectory();
         void daemonize();
         void setupSignalHandlers();
         void cleanup();
-
-        //callback para el servidor
+        
+        // Callbacks para el servidor
         void onMessageReceived(const std::string& message);
         void onQuitRequested();
         
     public:
+        // Forma Coplien (constructor de copia y operador= están disabled)
         MattDaemon();
-        MattDaemon(const MattDaemon& other);
-        MattDaemon& operator=(const MattDaemon& other);
+        MattDaemon(const MattDaemon& other) = delete;
+        MattDaemon& operator=(const MattDaemon& other) = delete;
         ~MattDaemon();
-
-        // Metodo principal
+        
+        // Método principal
         int run();
         void stop();
-        // para el manejador de señales
+        
+        // Para verificar estado
         bool isRunning() const;
 };
+
 #endif

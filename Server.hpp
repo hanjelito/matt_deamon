@@ -32,6 +32,10 @@ class Server {
         void start();
         void stop();
         bool isRunning() const;
+        
+        // Para integración con daemon - una iteración no bloqueante
+        void handleOneIteration();
+        void setRunning(bool running);
 
         // esto es para los callback
         void setMessageHandler(std::function<void(const std::string&)> handler);
