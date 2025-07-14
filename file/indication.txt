@@ -1,0 +1,109 @@
+Basándome en el documento del proyecto Matt_daemon, aquí están todos los puntos que necesitas implementar para crear este daemon en C++:
+Estructura del Proyecto
+1. Archivos principales
+
+MattDaemon (ejecutable final)
+Makefile (respetando reglas regulares)
+Clases en forma Coplien (constructor, destructor, constructor de copia, operador de asignación)
+
+2. Clase Tintin_reporter
+
+Sistema de logging reutilizable
+Manejo de timestamps en formato [DD/MM/YYYY - HH:MM:SS]
+Diferentes niveles de log: INFO, LOG, ERROR
+Escritura en /var/log/matt_daemon/matt_daemon.log
+
+Funcionalidades Obligatorias
+3. Verificación de permisos
+
+Verificar que se ejecuta solo con permisos de root
+Mostrar error si no se ejecuta como root
+
+4. Daemonización
+
+Implementar proceso daemon (sin usar función daemon())
+Usar fork() para crear proceso hijo
+Usar chdir() para cambiar directorio
+Desconectar de terminal (setsid)
+Cerrar file descriptors estándar
+
+5. Sistema de bloqueo
+
+Crear archivo /var/lock/matt_daemon.lock al iniciar
+Usar flock() (no LOCK_SH) para bloquear archivo
+Verificar si ya existe una instancia ejecutándose
+Eliminar archivo lock al terminar
+Mostrar error "Can't open :/var/lock/matt_daemon.lock" si ya hay instancia
+
+6. Servidor de red
+
+Escuchar en puerto 4242
+Permitir máximo 3 clientes simultáneos
+Manejar conexiones TCP
+
+7. Manejo de mensajes
+
+Recibir mensajes de clientes
+Registrar todos los mensajes en el log (excepto "quit")
+Comando "quit" termina el daemon
+Formato de log: [timestamp] [ LOG ] - Matt_daemon: User input: [mensaje]
+
+8. Manejo de señales
+
+Interceptar señales del sistema
+Registrar señal recibida en log
+Terminar correctamente al recibir señal
+Ejemplo: [timestamp] [ INFO ] - Matt_daemon: Signal handler.
+
+9. Logging detallado
+[timestamp] [ INFO ] - Matt_daemon: Started.
+[timestamp] [ INFO ] - Matt_daemon: Creating server.
+[timestamp] [ INFO ] - Matt_daemon: Server created.
+[timestamp] [ INFO ] - Matt_daemon: Entering Daemon mode.
+[timestamp] [ INFO ] - Matt_daemon: started. PID: [pid].
+[timestamp] [ LOG ] - Matt_daemon: User input: [mensaje]
+[timestamp] [ INFO ] - Matt_daemon: Request quit.
+[timestamp] [ INFO ] - Matt_daemon: Quitting.
+Implementación Técnica
+10. Manejo de errores
+
+Gestión robusta de errores sin crashes
+No segmentation faults
+Logs de errores apropiados
+
+11. Limpieza de recursos
+
+Cerrar sockets correctamente
+Liberar memoria
+Eliminar archivo lock al terminar
+Manejo de señales para limpieza
+
+12. Restricciones técnicas
+
+Solo C++ (cualquier versión)
+No usar bibliotecas que hagan el trabajo por ti
+Prohibido usar función daemon()
+Usar correctamente: fork, chdir, flock, signal
+
+Funcionalidades Bonus (Opcionales)
+13. Cliente gráfico (Ben_AFK)
+
+Interfaz gráfica para interactuar con daemon
+Sistema de autenticación
+Shell remoto
+
+14. Características avanzadas
+
+Cifrado de datos
+Archivado avanzado de logs
+Envío de emails con filtros
+Sistemas de encriptación público/privado
+
+Entorno de Desarrollo
+15. Requisitos del sistema
+
+Linux kernel > 3.14
+Testear en Debian 7.0 64-bit estable
+Máquina virtual Linux
+
+Este proyecto requiere conocimientos sólidos de programación de sistemas, manejo de sockets, señales UNIX, y procesos daemon en Linux.

@@ -34,7 +34,7 @@ class Server {
         bool isRunning() const;
 
         // esto es para los callback
-        void setMessageHabdler(std::function<void(const std::string&)> handler);
+        void setMessageHandler(std::function<void(const std::string&)> handler);
         void setQuitHandler(std::function<void()> handler);
 
         //
@@ -43,7 +43,7 @@ class Server {
 
     private:
         void handleConnections();
-        void hangleClient(int clientSocket);
+        bool handleClient(int clientSocket);
         void cleanup();
         bool acceptNewClient();
         void processExistingClients(fd_set& readSet);
