@@ -1,12 +1,13 @@
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <iostream>
-#include <cstring>
-#include <cstdlib>
-#include <cerrno> 
+#include <unistd.h>    // API POSIX (read, write, fork, exec…)
+#include <sys/types.h> // tipos básicos del sistema (pid_t, off_t…)
+#include <sys/stat.h>  // obtención de atributos de ficheros (stat, modos…)
+#include <signal.h>    // manejo de señales (SIGINT, sigaction, kill…)
+#include <fcntl.h>     // control de archivos (open, fcntl, O_CREAT…)
+#include <iostream>    // flujo C++ (std::cin, std::cout, std::cerr)
+#include <cstring>     // funciones C de cadenas (strlen, strcpy, memcpy…)
+#include <cstdlib>     // utilidades C (malloc, free, exit, atoi, rand)
+#include <cerrno>      // códigos de error (errno, EACCES, ENOENT…)
+
 
 class Daemon {
     public:
